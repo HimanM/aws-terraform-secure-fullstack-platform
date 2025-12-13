@@ -36,9 +36,9 @@ resource "aws_vpc" "main" {
     Name = "${var.project_name}-vpc"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 # =============================================================================
@@ -52,9 +52,9 @@ resource "aws_internet_gateway" "main" {
     Name = "${var.project_name}-igw"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 # =============================================================================
@@ -74,9 +74,9 @@ resource "aws_subnet" "public" {
     Type = "public"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 # =============================================================================
@@ -95,9 +95,9 @@ resource "aws_subnet" "private" {
     Type = "private"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 # =============================================================================

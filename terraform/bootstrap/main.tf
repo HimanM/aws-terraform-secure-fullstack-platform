@@ -40,9 +40,9 @@ provider "aws" {
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.project_name}-terraform-state-${var.aws_account_id}"
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state" {
@@ -87,7 +87,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
