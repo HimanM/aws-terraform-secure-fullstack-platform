@@ -60,8 +60,8 @@ resource "aws_cloudfront_distribution" "frontend" {
     }
 
     min_ttl     = 0
-    default_ttl = 3600
-    max_ttl     = 86400
+    default_ttl = 0
+    max_ttl     = 31536000
   }
 
   # Handle SPA routing - return index.html for 404s
