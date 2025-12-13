@@ -276,12 +276,20 @@ resource "aws_iam_policy" "github_actions" {
           "cloudfront:CreateInvalidation",
           "cloudfront:GetInvalidation",
           "cloudfront:GetDistribution",
+          "cloudfront:UpdateDistribution",
           "cloudfront:ListDistributions",
           "cloudfront:GetOriginAccessControl",
           "cloudfront:ListOriginAccessControls",
           "cloudfront:ListTagsForResource",
           "cloudfront:GetCachePolicy",
-          "cloudfront:ListCachePolicies"
+          "cloudfront:ListCachePolicies",
+          "cloudfront:DescribeFunction",
+          "cloudfront:GetFunction",
+          "cloudfront:ListFunctions",
+          "cloudfront:CreateFunction",
+          "cloudfront:UpdateFunction",
+          "cloudfront:DeleteFunction",
+          "cloudfront:PublishFunction"
         ]
         Resource = "*"
       },
