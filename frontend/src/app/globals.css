@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --aws-orange: #FF9900;
+  --aws-dark: #232F3E;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.architecture-box {
+  @apply border-2 rounded-lg p-4 text-center transition-all duration-200;
+}
+
+.architecture-box:hover {
+  @apply shadow-lg transform -translate-y-1;
+}
+
+.code-block {
+  @apply bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto font-mono text-sm;
+}
+
+.nav-link {
+  @apply px-4 py-2 rounded-lg transition-colors duration-200;
+}
+
+.nav-link:hover {
+  @apply bg-gray-100;
+}
+
+.nav-link.active {
+  @apply bg-aws-orange text-white;
+}

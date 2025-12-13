@@ -1,0 +1,23 @@
+# =============================================================================
+# DynamoDB Module Outputs
+# =============================================================================
+
+output "table_name" {
+  description = "Name of the DynamoDB table"
+  value       = aws_dynamodb_table.items.name
+}
+
+output "table_arn" {
+  description = "ARN of the DynamoDB table"
+  value       = aws_dynamodb_table.items.arn
+}
+
+output "table_id" {
+  description = "ID of the DynamoDB table"
+  value       = aws_dynamodb_table.items.id
+}
+
+output "gsi1_name" {
+  description = "Name of the GSI1 index"
+  value       = "GSI1"
+}

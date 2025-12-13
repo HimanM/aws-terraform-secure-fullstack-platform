@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Laptop",
+    "description": "High-performance laptop for developers with 16GB RAM and 512GB SSD",
+    "category": "Electronics",
+    "price": 1299.99
+  },
+  {
+    "name": "Mechanical Keyboard",
+    "description": "RGB mechanical keyboard with Cherry MX Blue switches",
+    "category": "Electronics",
+    "price": 149.99
+  },
+  {
+    "name": "Wireless Mouse",
+    "description": "Ergonomic wireless mouse with adjustable DPI",
+    "category": "Electronics",
+    "price": 59.99
+  },
+  {
+    "name": "Monitor Stand",
+    "description": "Adjustable monitor stand with USB hub",
+    "category": "Office",
+    "price": 79.99
+  },
+  {
+    "name": "USB-C Hub",
+    "description": "7-in-1 USB-C hub with HDMI, USB 3.0, and SD card reader",
+    "category": "Electronics",
+    "price": 49.99
+  },
+  {
+    "name": "Desk Lamp",
+    "description": "LED desk lamp with adjustable brightness and color temperature",
+    "category": "Office",
+    "price": 39.99
+  },
+  {
+    "name": "Webcam",
+    "description": "1080p HD webcam with built-in microphone",
+    "category": "Electronics",
+    "price": 89.99
+  },
+  {
+    "name": "Headphones",
+    "description": "Over-ear noise-canceling headphones with 30-hour battery",
+    "category": "Audio",
+    "price": 249.99
+  },
+  {
+    "name": "Microphone",
+    "description": "USB condenser microphone for streaming and podcasting",
+    "category": "Audio",
+    "price": 129.99
+  },
+  {
+    "name": "Cable Management Kit",
+    "description": "Complete cable management solution with clips and sleeves",
+    "category": "Office",
+    "price": 24.99
+  }
+]
