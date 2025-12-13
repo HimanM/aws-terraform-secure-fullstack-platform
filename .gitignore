@@ -67,3 +67,5 @@ build/
 
 # Other
 tfoutputs.txt
+/docs/screenshots/README.md
+/docs/SCREENSHOTS.md

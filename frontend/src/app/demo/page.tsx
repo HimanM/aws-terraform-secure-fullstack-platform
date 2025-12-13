@@ -304,7 +304,7 @@ export default function DemoPage() {
                   <th className="px-4 md:px-6 py-4 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="bg-white divide-y divide-gray-100">
                 {loading ? (
                   <tr>
                     <td colSpan={5} className="px-6 py-12 text-center">
@@ -369,18 +369,18 @@ export default function DemoPage() {
         </div>
 
         {/* API Info */}
-        <div className="mt-8 glass rounded-2xl p-6 border border-gray-800/10 bg-gray-900 text-gray-100">
-          <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <Terminal className="h-5 w-5 text-orange-400" />
+        <div className="mt-8 glass rounded-2xl p-6 shadow-lg">
+          <h3 className="text-lg font-bold mb-4 flex items-center gap-2 text-gray-900">
+            <Terminal className="h-5 w-5 text-orange-500" />
             API Endpoints
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 font-mono text-sm">
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs">GET</span> /items</div>
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-400 rounded text-xs">GET</span> /items/&#123;id&#125;</div>
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded text-xs">POST</span> /items</div>
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 rounded text-xs">PUT</span> /items/&#123;id&#125;</div>
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">DELETE</span> /items/&#123;id&#125;</div>
-            <div className="flex items-center gap-2"><span className="px-2 py-0.5 bg-gray-500/20 text-gray-400 rounded text-xs">GET</span> /health</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 font-mono text-sm">
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded text-xs font-bold">GET</span> /items</div>
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded text-xs font-bold">GET</span> /items/&#123;id&#125;</div>
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs font-bold">POST</span> /items</div>
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-bold">PUT</span> /items/&#123;id&#125;</div>
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs font-bold">DELETE</span> /items/&#123;id&#125;</div>
+            <div className="flex items-center gap-2 text-gray-700"><span className="px-2 py-0.5 bg-gray-200 text-gray-700 rounded text-xs font-bold">GET</span> /health</div>
           </div>
         </div>
       </div>
