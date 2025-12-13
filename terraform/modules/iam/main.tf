@@ -192,7 +192,11 @@ resource "aws_iam_policy" "github_actions" {
           "ecr:PutImage",
           "ecr:InitiateLayerUpload",
           "ecr:UploadLayerPart",
-          "ecr:CompleteLayerUpload"
+          "ecr:CompleteLayerUpload",
+          "ecr:DescribeRepositories",
+          "ecr:ListImages",
+          "ecr:GetRepositoryPolicy",
+          "ecr:GetLifecyclePolicy"
         ]
         Resource = var.ecr_repository_arn
       },
@@ -205,19 +209,34 @@ resource "aws_iam_policy" "github_actions" {
           "ecs:DescribeTaskDefinition",
           "ecs:RegisterTaskDefinition",
           "ecs:ListTasks",
-          "ecs:DescribeTasks"
+          "ecs:DescribeTasks",
+          "ecs:DescribeClusters",
+          "ecs:ListClusters",
+          "ecs:ListServices",
+          "ecs:CreateService",
+          "ecs:DeleteService",
+          "ecs:DeregisterTaskDefinition",
+          "ecs:ListTaskDefinitions"
         ]
         Resource = "*"
       },
+      # IAM permissions for Terraform
       {
         Effect = "Allow"
         Action = [
-          "iam:PassRole"
+          "iam:PassRole",
+          "iam:GetRole",
+          "iam:GetPolicy",
+          "iam:GetPolicyVersion",
+          "iam:ListRolePolicies",
+          "iam:ListAttachedRolePolicies",
+          "iam:GetRolePolicy",
+          "iam:ListPolicies",
+          "iam:ListPolicyVersions",
+          "iam:GetOpenIDConnectProvider",
+          "iam:ListOpenIDConnectProviders"
         ]
-        Resource = [
-          aws_iam_role.ecs_execution.arn,
-          aws_iam_role.ecs_task.arn
-        ]
+        Resource = "*"
       },
       # S3 permissions for frontend
       {
@@ -226,7 +245,20 @@ resource "aws_iam_policy" "github_actions" {
           "s3:PutObject",
           "s3:GetObject",
           "s3:DeleteObject",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketPolicy",
+          "s3:GetBucketAcl",
+          "s3:GetBucketCors",
+          "s3:GetBucketWebsite",
+          "s3:GetBucketVersioning",
+          "s3:GetBucketLocation",
+          "s3:GetBucketLogging",
+          "s3:GetBucketTagging",
+          "s3:GetEncryptionConfiguration",
+          "s3:GetBucketPublicAccessBlock",
+          "s3:GetBucketOwnershipControls",
+          "s3:GetLifecycleConfiguration",
+          "s3:GetReplicationConfiguration"
         ]
         Resource = [
           var.frontend_bucket_arn,
@@ -239,9 +271,12 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           "cloudfront:CreateInvalidation",
           "cloudfront:GetInvalidation",
-          "cloudfront:GetDistribution"
+          "cloudfront:GetDistribution",
+          "cloudfront:ListDistributions",
+          "cloudfront:GetOriginAccessControl",
+          "cloudfront:ListOriginAccessControls"
         ]
-        Resource = var.cloudfront_distribution_arn
+        Resource = "*"
       },
       # Terraform state permissions
       {
@@ -250,7 +285,8 @@ resource "aws_iam_policy" "github_actions" {
           "s3:GetObject",
           "s3:PutObject",
           "s3:DeleteObject",
-          "s3:ListBucket"
+          "s3:ListBucket",
+          "s3:GetBucketVersioning"
         ]
         Resource = [
           var.terraform_state_bucket_arn,
@@ -262,9 +298,92 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           "dynamodb:GetItem",
           "dynamodb:PutItem",
-          "dynamodb:DeleteItem"
+          "dynamodb:DeleteItem",
+          "dynamodb:DescribeTable"
         ]
         Resource = var.terraform_lock_table_arn
+      },
+      # DynamoDB read permissions for Terraform state
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:DescribeTable",
+          "dynamodb:DescribeContinuousBackups",
+          "dynamodb:DescribeTimeToLive",
+          "dynamodb:ListTagsOfResource"
+        ]
+        Resource = "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.project_name}-*"
+      },
+      # EC2/VPC read permissions for Terraform
+      {
+        Effect = "Allow"
+        Action = [
+          "ec2:DescribeVpcs",
+          "ec2:DescribeSubnets",
+          "ec2:DescribeSecurityGroups",
+          "ec2:DescribeRouteTables",
+          "ec2:DescribeInternetGateways",
+          "ec2:DescribeNatGateways",
+          "ec2:DescribeVpcEndpoints",
+          "ec2:DescribeNetworkInterfaces",
+          "ec2:DescribeAvailabilityZones",
+          "ec2:DescribeAddresses",
+          "ec2:DescribeTags"
+        ]
+        Resource = "*"
+      },
+      # CloudWatch Logs permissions
+      {
+        Effect = "Allow"
+        Action = [
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams",
+          "logs:ListTagsLogGroup"
+        ]
+        Resource = "*"
+      },
+      # SNS permissions
+      {
+        Effect = "Allow"
+        Action = [
+          "sns:GetTopicAttributes",
+          "sns:ListTopics",
+          "sns:ListTagsForResource"
+        ]
+        Resource = "*"
+      },
+      # API Gateway permissions
+      {
+        Effect = "Allow"
+        Action = [
+          "apigateway:GET"
+        ]
+        Resource = "arn:aws:apigateway:${data.aws_region.current.name}::/apis/*"
+      },
+      # ELB permissions for internal ALB
+      {
+        Effect = "Allow"
+        Action = [
+          "elasticloadbalancing:DescribeLoadBalancers",
+          "elasticloadbalancing:DescribeTargetGroups",
+          "elasticloadbalancing:DescribeListeners",
+          "elasticloadbalancing:DescribeTags",
+          "elasticloadbalancing:DescribeTargetHealth",
+          "elasticloadbalancing:DescribeLoadBalancerAttributes",
+          "elasticloadbalancing:DescribeTargetGroupAttributes"
+        ]
+        Resource = "*"
+      },
+      # CloudWatch Alarms/Dashboards
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudwatch:DescribeAlarms",
+          "cloudwatch:GetDashboard",
+          "cloudwatch:ListDashboards",
+          "cloudwatch:ListTagsForResource"
+        ]
+        Resource = "*"
       }
     ]
   })
