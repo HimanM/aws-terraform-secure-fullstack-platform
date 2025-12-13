@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Cloud, Server, Database, Globe, Activity, Code, Shield, Lock, Menu, X, Sparkles } from 'lucide-react';
+import Image from 'next/image';
+import { Cloud, Server, Database, Activity, Code, Shield, Lock, Menu, X, Sparkles, Camera } from 'lucide-react';
+import { SiGithub } from 'react-icons/si';
 
 export default function ArchitecturePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -15,7 +17,7 @@ export default function ArchitecturePage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
               <div className="relative">
-                <Cloud className="h-8 w-8 text-orange-500 animate-float" />
+                <Image src="/favicon.png" alt="Logo" width={32} height={32} className="animate-float" />
                 <Sparkles className="h-3 w-3 text-amber-400 absolute -top-1 -right-1" />
               </div>
               <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-600">
@@ -27,6 +29,7 @@ export default function ArchitecturePage() {
               <Link href="/architecture" className="nav-link active">Architecture</Link>
               <Link href="/demo" className="nav-link">Live Demo</Link>
               <Link href="/terraform" className="nav-link">Terraform</Link>
+              <Link href="/screenshots" className="nav-link">Screenshots</Link>
             </div>
             <button 
               className="md:hidden p-2 rounded-lg hover:bg-orange-100 transition-colors"
@@ -42,6 +45,7 @@ export default function ArchitecturePage() {
                 <Link href="/architecture" className="nav-link active" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
                 <Link href="/demo" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
                 <Link href="/terraform" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
+                <Link href="/screenshots" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
               </div>
             </div>
           )}
@@ -191,12 +195,23 @@ export default function ArchitecturePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-2">
-              <Cloud className="h-6 w-6 text-orange-500" />
+              <Image src="/favicon.png" alt="Logo" width={24} height={24} />
               <span className="font-semibold text-gray-700">DevOps Project 9</span>
             </div>
-            <p className="text-gray-500 text-sm text-center md:text-right">
-              Built with Next.js, FastAPI, Terraform & AWS
-            </p>
+            <div className="flex flex-col items-center md:items-end gap-2">
+              <a 
+                href="https://github.com/HimanM/DevOps-Project-9" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-orange-500 transition-colors"
+              >
+                <SiGithub className="h-5 w-5" />
+                <span className="text-sm">View on GitHub</span>
+              </a>
+              <p className="text-gray-500 text-sm">
+                By <span className="font-medium text-orange-600">HimanM</span>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

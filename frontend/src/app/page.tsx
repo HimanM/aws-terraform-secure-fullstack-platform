@@ -1,7 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { Cloud, Server, Database, Globe, Activity, Code, ArrowRight, Sparkles, Shield, Zap, Menu, X, Lock, HardDrive, Network, BarChart3, Container, GitBranch, Atom, Box, Plug } from 'lucide-react';
+import Image from 'next/image';
+import { Cloud, Server, Database, Globe, Activity, Code, ArrowRight, Sparkles, Shield, Zap, Menu, X, Lock, Camera, Network, ExternalLink } from 'lucide-react';
+import { SiAmazons3, SiAmazoncloudwatch, SiAmazonapigateway, SiAmazonecs, SiAmazondynamodb, SiTerraform, SiGithubactions, SiNextdotjs, SiFastapi, SiGithub } from 'react-icons/si';
+import { FaDocker, FaNetworkWired } from 'react-icons/fa';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -15,7 +18,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2 animate-slide-in-left">
               <div className="relative">
-                <Cloud className="h-8 w-8 text-orange-500 animate-float" />
+                <Image src="/favicon.png" alt="Logo" width={32} height={32} className="animate-float" />
                 <Sparkles className="h-3 w-3 text-amber-400 absolute -top-1 -right-1" />
               </div>
               <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-600">
@@ -29,6 +32,7 @@ export default function HomePage() {
               <Link href="/architecture" className="nav-link">Architecture</Link>
               <Link href="/demo" className="nav-link">Live Demo</Link>
               <Link href="/terraform" className="nav-link">Terraform</Link>
+              <Link href="/screenshots" className="nav-link">Screenshots</Link>
             </div>
 
             {/* Mobile menu button */}
@@ -48,6 +52,7 @@ export default function HomePage() {
                 <Link href="/architecture" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
                 <Link href="/demo" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
                 <Link href="/terraform" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
+                <Link href="/screenshots" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
               </div>
             </div>
           )}
@@ -241,25 +246,25 @@ export default function HomePage() {
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { name: 'Amazon S3', desc: 'Static hosting', icon: HardDrive, color: 'text-emerald-500' },
-              { name: 'CloudFront', desc: 'CDN', icon: Globe, color: 'text-orange-500' },
-              { name: 'API Gateway', desc: 'HTTP API', icon: Plug, color: 'text-purple-500' },
-              { name: 'ECS Fargate', desc: 'Containers', icon: Container, color: 'text-blue-500' },
-              { name: 'DynamoDB', desc: 'NoSQL Database', icon: Database, color: 'text-amber-500' },
-              { name: 'CloudWatch', desc: 'Monitoring', icon: BarChart3, color: 'text-rose-500' },
-              { name: 'ECR', desc: 'Container Registry', icon: Box, color: 'text-indigo-500' },
-              { name: 'VPC', desc: 'Networking', icon: Network, color: 'text-cyan-500' },
-              { name: 'Terraform', desc: 'IaC', icon: Code, color: 'text-violet-500' },
-              { name: 'GitHub Actions', desc: 'CI/CD', icon: GitBranch, color: 'text-gray-700' },
-              { name: 'Next.js', desc: 'Frontend', icon: Atom, color: 'text-sky-500' },
-              { name: 'FastAPI', desc: 'Backend', icon: Zap, color: 'text-teal-500' },
+              { name: 'Amazon S3', desc: 'Static hosting', Icon: SiAmazons3, color: 'text-[#569A31]' },
+              { name: 'CloudFront', desc: 'CDN', Icon: Globe, color: 'text-[#8C4FFF]' },
+              { name: 'API Gateway', desc: 'HTTP API', Icon: SiAmazonapigateway, color: 'text-[#FF4F8B]' },
+              { name: 'ECS Fargate', desc: 'Containers', Icon: SiAmazonecs, color: 'text-[#FF9900]' },
+              { name: 'DynamoDB', desc: 'NoSQL Database', Icon: SiAmazondynamodb, color: 'text-[#4053D6]' },
+              { name: 'CloudWatch', desc: 'Monitoring', Icon: SiAmazoncloudwatch, color: 'text-[#FF4F8B]' },
+              { name: 'ECR', desc: 'Container Registry', Icon: FaDocker, color: 'text-[#FF9900]' },
+              { name: 'VPC', desc: 'Networking', Icon: FaNetworkWired, color: 'text-[#8C4FFF]' },
+              { name: 'Terraform', desc: 'IaC', Icon: SiTerraform, color: 'text-[#844FBA]' },
+              { name: 'GitHub Actions', desc: 'CI/CD', Icon: SiGithubactions, color: 'text-[#2088FF]' },
+              { name: 'Next.js', desc: 'Frontend', Icon: SiNextdotjs, color: 'text-black' },
+              { name: 'FastAPI', desc: 'Backend', Icon: SiFastapi, color: 'text-[#009688]' },
             ].map((tech, idx) => (
               <div 
                 key={idx} 
                 className="glass rounded-xl p-4 text-center card-hover group"
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
-                <tech.icon className={`h-7 w-7 mx-auto mb-2 ${tech.color} group-hover:scale-125 transition-transform`} />
+                <tech.Icon className={`h-8 w-8 mx-auto mb-2 ${tech.color} group-hover:scale-125 transition-transform`} />
                 <div className="font-bold text-gray-800">{tech.name}</div>
                 <div className="text-sm text-gray-500">{tech.desc}</div>
               </div>
@@ -299,15 +304,24 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-2">
-              <Cloud className="h-6 w-6 text-orange-500" />
+              <Image src="/favicon.png" alt="Logo" width={24} height={24} />
               <span className="font-semibold text-gray-700">DevOps Project 9</span>
             </div>
-            <p className="text-gray-500 text-sm text-center md:text-right">
-              Built with Next.js, FastAPI, Terraform & AWS
-              <br className="md:hidden" />
-              <span className="hidden md:inline"> • </span>
-              A learning project for cloud architecture
-            </p>
+            <div className="flex flex-col items-center md:items-end gap-2">
+              <a 
+                href="https://github.com/HimanM/DevOps-Project-9" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-orange-500 transition-colors"
+              >
+                <SiGithub className="h-5 w-5" />
+                <span className="text-sm">View on GitHub</span>
+                <ExternalLink className="h-3 w-3" />
+              </a>
+              <p className="text-gray-500 text-sm">
+                By <span className="font-medium text-orange-600">HimanM</span>
+              </p>
+            </div>
           </div>
         </div>
       </footer>
