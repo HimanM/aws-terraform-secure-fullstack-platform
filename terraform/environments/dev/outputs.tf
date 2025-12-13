@@ -128,3 +128,19 @@ output "api_url" {
   description = "URL to access the API"
   value       = module.api_gateway.api_endpoint
 }
+
+# Aliases for GitHub Actions workflow
+output "cloudfront_url" {
+  description = "CloudFront distribution URL"
+  value       = "https://${module.cloudfront.distribution_domain_name}"
+}
+
+output "api_gateway_url" {
+  description = "API Gateway endpoint URL"
+  value       = module.api_gateway.api_endpoint
+}
+
+output "cloudwatch_dashboard_url" {
+  description = "CloudWatch Dashboard URL"
+  value       = "https://${var.aws_region}.console.aws.amazon.com/cloudwatch/home?region=${var.aws_region}#dashboards:name=${var.project_name}-dashboard"
+}

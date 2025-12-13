@@ -27,18 +27,27 @@ fi
 # Run the Python seed script
 cd "$(dirname "$0")/../backend/seed"
 
-# Check if Python is available
-if ! command -v python3 &>/dev/null; then
+# Check if Python is available (try py for Windows first, then python3, then python)
+PYTHON_CMD=""
+if command -v py &>/dev/null && py -3 --version &>/dev/null; then
+    PYTHON_CMD="py -3"
+elif command -v python3 &>/dev/null && python3 --version &>/dev/null; then
+    PYTHON_CMD="python3"
+elif command -v python &>/dev/null && python --version 2>&1 | grep -q "Python 3"; then
+    PYTHON_CMD="python"
+else
     echo "❌ Python3 is required but not installed."
     exit 1
 fi
+
+echo "Using Python: $PYTHON_CMD"
 
 # Export environment variables for the script
 export AWS_REGION="${AWS_REGION}"
 export DYNAMODB_TABLE_NAME="${TABLE_NAME}"
 
 # Run seed script
-python3 seed_db.py
+$PYTHON_CMD seed_db.py
 
 echo "============================================="
 echo "✅ Database seeded successfully!"
