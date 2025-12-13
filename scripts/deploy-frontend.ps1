@@ -6,7 +6,7 @@
 $ErrorActionPreference = "Stop"
 
 # Configuration
-$AwsRegion = if ($env:AWS_REGION) { $env:AWS_REGION } else { "us-east-1" }
+$AwsRegion = if ($env:AWS_REGION) { $env:AWS_REGION } else { "us-west-2" }
 $ProjectName = if ($env:PROJECT_NAME) { $env:PROJECT_NAME } else { "devops-project-9" }
 
 # Get AWS account ID

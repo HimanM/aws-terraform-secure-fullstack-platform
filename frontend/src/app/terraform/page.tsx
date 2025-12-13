@@ -134,7 +134,7 @@ terraform apply`}
   backend "s3" {
     bucket         = "devops-project-9-terraform-state-ACCOUNT_ID"
     key            = "dev/terraform.tfstate"
-    region         = "us-east-1"
+    region         = "us-west-2"
     encrypt        = true
     dynamodb_table = "devops-project-9-terraform-locks"
   }
@@ -160,15 +160,15 @@ terraform init
 terraform apply -target=module.ecr
 
 # Get ECR login
-aws ecr get-login-password --region us-east-1 | \\
-  docker login --username AWS --password-stdin ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login-password --region us-west-2 | \\
+  docker login --username AWS --password-stdin ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com
 
 # Build and push
 cd ../../../backend
 docker build -t devops-project-9-backend .
 docker tag devops-project-9-backend:latest \\
-  ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/devops-project-9-backend:latest
-docker push ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/devops-project-9-backend:latest`}
+  ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/devops-project-9-backend:latest
+docker push ACCOUNT_ID.dkr.ecr.us-west-2.amazonaws.com/devops-project-9-backend:latest`}
                   />
                 </div>
               </div>
@@ -250,7 +250,7 @@ aws cloudfront create-invalidation \\
                     code={`cd backend/seed
 
 # Set environment variables
-export AWS_REGION="us-east-1"
+export AWS_REGION="us-west-2"
 export DYNAMODB_TABLE_NAME="devops-project-9-items"
 
 # Run seed script

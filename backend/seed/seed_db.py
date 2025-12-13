@@ -11,7 +11,7 @@ from datetime import datetime
 
 # Configuration
 TABLE_NAME = os.environ.get("DYNAMODB_TABLE_NAME", "devops-project-9-items")
-AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
+AWS_REGION = os.environ.get("AWS_REGION", "us-west-2")
 
 
 def seed_database():

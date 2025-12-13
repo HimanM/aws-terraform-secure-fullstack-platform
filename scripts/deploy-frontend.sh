@@ -7,7 +7,7 @@
 set -e
 
 # Configuration
-AWS_REGION="${AWS_REGION:-us-east-1}"
+AWS_REGION="${AWS_REGION:-us-west-2}"
 PROJECT_NAME="${PROJECT_NAME:-devops-project-9}"
 
 # Get AWS account ID

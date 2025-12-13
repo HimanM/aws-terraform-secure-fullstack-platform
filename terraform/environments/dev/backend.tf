@@ -8,7 +8,7 @@ terraform {
   backend "s3" {
     bucket       = "devops-project-9-terraform-state-603630702351"  # Replace ACCOUNT_ID
     key          = "dev/terraform.tfstate"
-    region       = "us-east-1"
+    region       = "us-west-2"
     encrypt      = true
     use_lockfile = true
   }

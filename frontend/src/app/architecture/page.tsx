@@ -55,7 +55,7 @@ export default function ArchitecturePage() {
                 <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-bold">3</div>
                 <div>
                   <h3 className="font-semibold text-lg">API Request</h3>
-                  <p className="text-gray-600">Frontend makes API calls to API Gateway HTTP API endpoint (e.g., https://abc123.execute-api.us-east-1.amazonaws.com)</p>
+                  <p className="text-gray-600">Frontend makes API calls to API Gateway HTTP API endpoint (e.g., https://abc123.execute-api.us-west-2.amazonaws.com)</p>
                 </div>
               </div>
 
