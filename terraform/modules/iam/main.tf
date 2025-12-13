@@ -238,7 +238,8 @@ resource "aws_iam_policy" "github_actions" {
         Effect = "Allow"
         Action = [
           "cloudfront:CreateInvalidation",
-          "cloudfront:GetInvalidation"
+          "cloudfront:GetInvalidation",
+          "cloudfront:GetDistribution"
         ]
         Resource = var.cloudfront_distribution_arn
       },
