@@ -4,6 +4,13 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'DevOps Project 9 - AWS Architecture Documentation',
   description: 'A learning project demonstrating AWS architecture with S3, CloudFront, API Gateway, ECS, and DynamoDB',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({
