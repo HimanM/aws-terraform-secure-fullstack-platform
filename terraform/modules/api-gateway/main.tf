@@ -42,7 +42,7 @@ resource "aws_apigatewayv2_api" "main" {
     allow_headers     = ["Content-Type", "Authorization", "X-Requested-With"]
     expose_headers    = ["Content-Type"]
     max_age           = 300
-    allow_credentials = true
+    allow_credentials = contains(var.cors_allow_origins, "*") ? false : true
   }
 
   tags = {

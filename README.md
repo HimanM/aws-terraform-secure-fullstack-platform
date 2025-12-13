@@ -100,7 +100,7 @@ Update `terraform/environments/dev/backend.tf` with outputs from bootstrap.
 # First deploy ECR
 cd terraform/environments/dev
 terraform init
-terraform apply -target=module.ecr
+terraform apply -target="module.ecr"
 
 # Build and push
 ./scripts/build-and-push.sh  # or build-and-push.ps1 on Windows
