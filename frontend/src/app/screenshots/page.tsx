@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, Sparkles, ChevronDown, ChevronRight, ZoomIn, XCircle, Globe, Terminal, ExternalLink, User } from 'lucide-react';
-import { SiAmazons3, SiAmazoncloudwatch, SiAmazonapigateway, SiAmazonecs, SiAmazondynamodb, SiGithub, SiAmazonwebservices } from 'react-icons/si';
+import { Menu, X, Sparkles, ChevronDown, ChevronRight, ZoomIn, XCircle, Globe, Terminal, ExternalLink, User, GitBranch } from 'lucide-react';
+import { SiAmazons3, SiAmazoncloudwatch, SiAmazonapigateway, SiAmazonecs, SiAmazondynamodb, SiGithub, SiAmazonwebservices, SiGithubactions } from 'react-icons/si';
 import { FaDocker, FaNetworkWired } from 'react-icons/fa';
 
 // Screenshot categories
@@ -107,6 +107,12 @@ const cliScreenshots = [
   { src: '/screenshots/cli/5_dev_terraform_apply.png', title: 'Full Deploy', desc: 'Complete infrastructure deployment', step: 5 },
   { src: '/screenshots/cli/6_deploy_frontend_script.png', title: 'Frontend Deploy', desc: 'Static site deployment to S3', step: 6 },
   { src: '/screenshots/cli/7_seed_dynamodb_script.png', title: 'Seed Database', desc: 'DynamoDB seed script execution', step: 7 },
+];
+
+const cicdScreenshots = [
+  { src: '/screenshots/cicd/terraform_plan_and_apply_success.png', title: 'Terraform Pipeline', desc: 'Successful Terraform plan and apply via GitHub Actions' },
+  { src: '/screenshots/cicd/backend_deploy_succes.png', title: 'Backend Deploy', desc: 'Backend Docker build and ECS deployment success' },
+  { src: '/screenshots/cicd/frontend_deploy_success.png', title: 'Frontend Deploy', desc: 'Frontend build and S3/CloudFront deployment success' },
 ];
 
 export default function ScreenshotsPage() {
@@ -322,6 +328,49 @@ export default function ScreenshotsPage() {
             ))}
           </div>
         </section>
+
+        {/* CI/CD Pipeline Screenshots */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <SiGithubactions className="h-8 w-8 mr-3 text-[#2088FF]" />
+            CI/CD Pipeline
+          </h2>
+          <p className="text-gray-600 mb-6">GitHub Actions workflow screenshots showing automated deployments.</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {cicdScreenshots.map((img, idx) => (
+              <div 
+                key={idx}
+                className="glass rounded-2xl p-4 group cursor-pointer card-hover"
+                onClick={() => openLightbox(img.src, img.title)}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-xl w-8 h-8 flex items-center justify-center shadow-lg">
+                    <GitBranch className="h-4 w-4" />
+                  </div>
+                  <h4 className="font-bold text-gray-900">{img.title}</h4>
+                </div>
+                <div className="relative aspect-video rounded-xl overflow-hidden border-2 border-gray-200 group-hover:border-blue-400 transition-all">
+                  <Image
+                    src={img.src}
+                    alt={img.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <div className="flex items-center gap-2 text-white">
+                      <ZoomIn className="h-4 w-4" />
+                      <span className="text-sm font-medium">Click to enlarge</span>
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-2 text-sm text-gray-500">{img.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
       </div>
 
       {/* Footer */}

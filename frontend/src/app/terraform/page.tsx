@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Copy, Check, Menu, X, Sparkles, Terminal, Folder, FileCode, AlertTriangle, CheckCircle2, ExternalLink } from 'lucide-react';
+import { Copy, Check, Menu, X, Sparkles, Terminal, Folder, FileCode, AlertTriangle, CheckCircle2, ExternalLink, Trash2 } from 'lucide-react';
 import { SiTerraform, SiGithub } from 'react-icons/si';
 
 const CodeBlock = ({ title, language, code }: { title: string; language: string; code: string }) => {
@@ -309,19 +309,77 @@ python seed_db.py`
           </div>
         </section>
 
-        {/* Important Notes */}
+        {/* Infrastructure Cleanup */}
         <section className="mb-12 animate-slide-up">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Important Notes</h2>
-          <div className="bg-amber-50 border-2 border-amber-200 p-6 rounded-2xl">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <Trash2 className="h-8 w-8 mr-3 text-red-500" />
+            Infrastructure Cleanup
+          </h2>
+          
+          <div className="bg-amber-50 border-2 border-amber-200 p-6 rounded-2xl mb-6">
             <h3 className="font-bold text-amber-800 mb-3 flex items-center">
-              <AlertTriangle className="mr-2 h-5 w-5" /> Before Destroying Infrastructure
+              <AlertTriangle className="mr-2 h-5 w-5" /> Important: Before Destroying
             </h3>
             <ul className="text-amber-700 space-y-2">
-              <li className="flex items-start"><span className="mr-2">•</span>S3 buckets must be emptied before deletion</li>
-              <li className="flex items-start"><span className="mr-2">•</span>VPC resources have <code className="bg-amber-100 px-1.5 py-0.5 rounded text-sm">prevent_destroy</code> - remove this lifecycle rule first</li>
+              <li className="flex items-start"><span className="mr-2">•</span>VPC has <code className="bg-amber-100 px-1.5 py-0.5 rounded text-sm">prevent_destroy</code> lifecycle rule - must be removed first</li>
+              <li className="flex items-start"><span className="mr-2">•</span>S3 buckets must be emptied before deletion (including versioned objects)</li>
               <li className="flex items-start"><span className="mr-2">•</span>ECR repository must be emptied of images</li>
               <li className="flex items-start"><span className="mr-2">•</span>CloudFront distribution can take 15-30 minutes to delete</li>
             </ul>
+          </div>
+
+          <div className="glass rounded-2xl p-6 border-l-4 border-red-500">
+            <p className="text-gray-600 mb-4">
+              To completely remove all AWS resources, follow these steps in order:
+            </p>
+            
+            <div className="space-y-4">
+              <div className="bg-white/50 rounded-xl p-4">
+                <h4 className="font-bold text-gray-900 mb-2">Step 1: Remove prevent_destroy from VPC</h4>
+                <p className="text-sm text-gray-600 mb-2">Edit the VPC module to remove the lifecycle rule:</p>
+                <CodeBlock 
+                  title="terraform/modules/networking/main.tf" 
+                  language="hcl" 
+                  code={`# Comment out or remove this block from the VPC resource:\nlifecycle {\n  prevent_destroy = true\n}`}
+                />
+              </div>
+
+              <div className="bg-white/50 rounded-xl p-4">
+                <h4 className="font-bold text-gray-900 mb-2">Step 2: Destroy Main Infrastructure</h4>
+                <p className="text-sm text-gray-600 mb-2">Destroy all resources managed by the dev environment:</p>
+                <CodeBlock 
+                  title="Terminal" 
+                  language="bash" 
+                  code={`cd terraform/environments/dev\nterraform destroy -auto-approve`}
+                />
+              </div>
+
+              <div className="bg-white/50 rounded-xl p-4">
+                <h4 className="font-bold text-gray-900 mb-2">Step 3: Empty the S3 State Bucket</h4>
+                <p className="text-sm text-gray-600 mb-2">S3 buckets must be empty before deletion. Remove all versions:</p>
+                <CodeBlock 
+                  title="Terminal" 
+                  language="bash" 
+                  code={`# Get your AWS account ID\nAWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)\n\n# Empty the bucket (including all versions)\naws s3api delete-objects --bucket devops-project-9-terraform-state-\${AWS_ACCOUNT_ID} \\\n  --delete "$(aws s3api list-object-versions \\\n  --bucket devops-project-9-terraform-state-\${AWS_ACCOUNT_ID} \\\n  --query '{Objects: Versions[].{Key:Key,VersionId:VersionId}}' \\\n  --output json)" 2>/dev/null || true\n\n# Delete any delete markers\naws s3api delete-objects --bucket devops-project-9-terraform-state-\${AWS_ACCOUNT_ID} \\\n  --delete "$(aws s3api list-object-versions \\\n  --bucket devops-project-9-terraform-state-\${AWS_ACCOUNT_ID} \\\n  --query '{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}' \\\n  --output json)" 2>/dev/null || true`}
+                />
+              </div>
+
+              <div className="bg-white/50 rounded-xl p-4">
+                <h4 className="font-bold text-gray-900 mb-2">Step 4: Destroy Bootstrap Resources</h4>
+                <p className="text-sm text-gray-600 mb-2">Finally, destroy the S3 state bucket and DynamoDB lock table:</p>
+                <CodeBlock 
+                  title="Terminal" 
+                  language="bash" 
+                  code={`cd terraform/bootstrap\nterraform destroy -auto-approve`}
+                />
+              </div>
+
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                <p className="text-red-800 text-sm">
+                  <strong>Warning:</strong> This will permanently delete your Terraform state. Make sure you have destroyed all infrastructure before Step 4.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </div>

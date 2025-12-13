@@ -18,14 +18,30 @@
 
 ---
 
+## Website Preview
+
+<div align="center">
+
+| Home Page | Architecture |
+|:---------:|:------------:|
+| ![Home](docs/website_screenshots/live_site_home.png) | ![Architecture](docs/website_screenshots/live_site_architecture.png) |
+
+| Live Demo | Terraform |
+|:---------:|:---------:|
+| ![Demo](docs/website_screenshots/live_site_live_demo.png) | ![Terraform](docs/website_screenshots/live_site_terraform.png) |
+
+</div>
+
+---
+
 ## Live Deployment
 
 <!-- FRONTEND_DEPLOY_START -->
 
-| 🌐 **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
+| **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
 |-----------------|---------------|
-| 📅 Last Deploy | 2025-12-13 05:48:32 UTC |
-| 🔖 Commit | `30fbded53e3724d7fbb60c531ff0e7a350cee856` |
+| Last Deploy | 2025-12-13 05:48:32 UTC |
+| Commit | `30fbded53e3724d7fbb60c531ff0e7a350cee856` |
 <!-- FRONTEND_DEPLOY_END -->
 
 ---
@@ -864,6 +880,12 @@ Manages the database.
 
 ## CI/CD Pipeline
 
+### Workflow Screenshots
+
+| Terraform Pipeline | Backend Deploy | Frontend Deploy |
+|:------------------:|:--------------:|:---------------:|
+| ![Terraform](docs/cicd_screenshots/terraform_plan_and_apply_success.png) | ![Backend](docs/cicd_screenshots/backend_deploy_succes.png) | ![Frontend](docs/cicd_screenshots/frontend_deploy_success.png) |
+
 ### GitHub Actions Workflows
 
 ```
@@ -1286,6 +1308,66 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 | **IaC** | Terraform | Infrastructure as Code |
 | **CI/CD** | GitHub Actions | Automated deployments |
 | **Monitoring** | Amazon CloudWatch | Logs, metrics, dashboards |
+
+---
+
+## Infrastructure Cleanup
+
+To completely remove all AWS resources, follow these steps in order. The infrastructure has deletion protection on certain resources, so you must follow this specific sequence.
+
+### Step 1: Remove prevent_destroy from VPC
+
+The VPC module has a `prevent_destroy` lifecycle rule. Edit `terraform/modules/networking/main.tf` and comment out or remove:
+
+```hcl
+# Comment out or remove this block from the VPC resource:
+lifecycle {
+  prevent_destroy = true
+}
+```
+
+### Step 2: Destroy Main Infrastructure
+
+Destroy all resources managed by the dev environment:
+
+```bash
+cd terraform/environments/dev
+terraform destroy -auto-approve
+```
+
+### Step 3: Empty the S3 State Bucket
+
+S3 buckets must be empty before deletion. Remove all objects including versions:
+
+```bash
+# Get your AWS account ID
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+
+# Empty the bucket (including all versions)
+aws s3api delete-objects --bucket devops-project-9-terraform-state-${AWS_ACCOUNT_ID} \
+  --delete "$(aws s3api list-object-versions \
+  --bucket devops-project-9-terraform-state-${AWS_ACCOUNT_ID} \
+  --query '{Objects: Versions[].{Key:Key,VersionId:VersionId}}' \
+  --output json)" 2>/dev/null || true
+
+# Delete any delete markers
+aws s3api delete-objects --bucket devops-project-9-terraform-state-${AWS_ACCOUNT_ID} \
+  --delete "$(aws s3api list-object-versions \
+  --bucket devops-project-9-terraform-state-${AWS_ACCOUNT_ID} \
+  --query '{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}' \
+  --output json)" 2>/dev/null || true
+```
+
+### Step 4: Destroy Bootstrap Resources
+
+Finally, destroy the S3 state bucket and DynamoDB lock table:
+
+```bash
+cd terraform/bootstrap
+terraform destroy -auto-approve
+```
+
+> **Warning**: This will permanently delete your Terraform state. Make sure you have destroyed all infrastructure before this step.
 
 ---
 
