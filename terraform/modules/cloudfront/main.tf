@@ -27,15 +27,18 @@ resource "aws_cloudfront_origin_access_control" "frontend" {
 }
 
 # =============================================================================
-# Cache Policy - Caching Disabled
+# Cache Policy - Respect Origin Cache Headers
 # =============================================================================
+# This policy respects Cache-Control headers set by S3:
+# - HTML files: no-cache (always fresh)
+# - Static assets (_next/): max-age=31536000 (1 year)
 
-resource "aws_cloudfront_cache_policy" "caching_disabled" {
-  name        = "${var.project_name}-caching-disabled"
-  comment     = "Policy with caching disabled for ${var.project_name}"
+resource "aws_cloudfront_cache_policy" "caching_optimized" {
+  name        = "${var.project_name}-caching-optimized"
+  comment     = "Cache policy that respects origin headers for ${var.project_name}"
   min_ttl     = 0
-  default_ttl = 0
-  max_ttl     = 0
+  default_ttl = 86400      # 1 day default if no Cache-Control header
+  max_ttl     = 31536000   # 1 year max for hashed assets
 
   parameters_in_cache_key_and_forwarded_to_origin {
     cookies_config {
@@ -48,6 +51,37 @@ resource "aws_cloudfront_cache_policy" "caching_disabled" {
       query_string_behavior = "none"
     }
   }
+}
+
+# =============================================================================
+# CloudFront Function for URL Rewriting
+# =============================================================================
+# This function rewrites URLs to properly serve Next.js static export files
+# - /screenshots/ -> /screenshots/index.html
+# - /demo/ -> /demo/index.html
+
+resource "aws_cloudfront_function" "url_rewrite" {
+  name    = "${var.project_name}-url-rewrite"
+  runtime = "cloudfront-js-2.0"
+  comment = "Rewrite URLs for Next.js static export"
+  publish = true
+  code    = <<-EOF
+function handler(event) {
+    var request = event.request;
+    var uri = request.uri;
+    
+    // If URI ends with '/', append index.html
+    if (uri.endsWith('/')) {
+        request.uri += 'index.html';
+    }
+    // If URI doesn't have an extension, assume it's a directory and add /index.html
+    else if (!uri.includes('.')) {
+        request.uri += '/index.html';
+    }
+    
+    return request;
+}
+EOF
 }
 
 # =============================================================================
@@ -76,22 +110,28 @@ resource "aws_cloudfront_distribution" "frontend" {
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
 
-    # Use managed cache policy to completely disable caching
-    cache_policy_id = aws_cloudfront_cache_policy.caching_disabled.id
+    # Use cache policy that respects origin Cache-Control headers
+    cache_policy_id = aws_cloudfront_cache_policy.caching_optimized.id
+
+    # CloudFront Function to rewrite URLs for Next.js static export
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.url_rewrite.arn
+    }
   }
 
-  # Handle SPA routing - return index.html for 404s
+  # Custom error responses - serve 404.html for actual not found errors
   custom_error_response {
     error_code            = 404
-    response_code         = 200
-    response_page_path    = "/index.html"
+    response_code         = 404
+    response_page_path    = "/404.html"
     error_caching_min_ttl = 0
   }
 
   custom_error_response {
     error_code            = 403
-    response_code         = 200
-    response_page_path    = "/index.html"
+    response_code         = 404
+    response_page_path    = "/404.html"
     error_caching_min_ttl = 0
   }
 

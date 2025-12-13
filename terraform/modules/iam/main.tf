@@ -279,7 +279,9 @@ resource "aws_iam_policy" "github_actions" {
           "cloudfront:ListDistributions",
           "cloudfront:GetOriginAccessControl",
           "cloudfront:ListOriginAccessControls",
-          "cloudfront:ListTagsForResource"
+          "cloudfront:ListTagsForResource",
+          "cloudfront:GetCachePolicy",
+          "cloudfront:ListCachePolicies"
         ]
         Resource = "*"
       },
