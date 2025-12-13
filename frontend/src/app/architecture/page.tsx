@@ -26,10 +26,10 @@ export default function ArchitecturePage() {
             </div>
             <div className="hidden md:flex space-x-2">
               <Link href="/" className="nav-link">Home</Link>
-              <Link href="/architecture" className="nav-link active">Architecture</Link>
-              <Link href="/demo" className="nav-link">Live Demo</Link>
-              <Link href="/terraform" className="nav-link">Terraform</Link>
-              <Link href="/screenshots" className="nav-link">Screenshots</Link>
+              <Link href="/architecture/" className="nav-link active">Architecture</Link>
+              <Link href="/demo/" className="nav-link">Live Demo</Link>
+              <Link href="/terraform/" className="nav-link">Terraform</Link>
+              <Link href="/screenshots/" className="nav-link">Screenshots</Link>
             </div>
             <button 
               className="md:hidden p-2 rounded-lg hover:bg-orange-100 transition-colors"
@@ -42,10 +42,10 @@ export default function ArchitecturePage() {
             <div className="md:hidden pb-4 animate-slide-up">
               <div className="flex flex-col space-y-2">
                 <Link href="/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-                <Link href="/architecture" className="nav-link active" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
-                <Link href="/demo" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
-                <Link href="/terraform" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
-                <Link href="/screenshots" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
+                <Link href="/architecture/" className="nav-link active" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
+                <Link href="/demo/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
+                <Link href="/terraform/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
+                <Link href="/screenshots/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
               </div>
             </div>
           )}

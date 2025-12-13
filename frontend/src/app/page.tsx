@@ -29,10 +29,10 @@ export default function HomePage() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-2 animate-slide-in-right">
               <Link href="/" className="nav-link active">Home</Link>
-              <Link href="/architecture" className="nav-link">Architecture</Link>
-              <Link href="/demo" className="nav-link">Live Demo</Link>
-              <Link href="/terraform" className="nav-link">Terraform</Link>
-              <Link href="/screenshots" className="nav-link">Screenshots</Link>
+              <Link href="/architecture/" className="nav-link">Architecture</Link>
+              <Link href="/demo/" className="nav-link">Live Demo</Link>
+              <Link href="/terraform/" className="nav-link">Terraform</Link>
+              <Link href="/screenshots/" className="nav-link">Screenshots</Link>
             </div>
 
             {/* Mobile menu button */}
@@ -49,10 +49,10 @@ export default function HomePage() {
             <div className="md:hidden pb-4 animate-slide-up">
               <div className="flex flex-col space-y-2">
                 <Link href="/" className="nav-link active" onClick={() => setMobileMenuOpen(false)}>Home</Link>
-                <Link href="/architecture" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
-                <Link href="/demo" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
-                <Link href="/terraform" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
-                <Link href="/screenshots" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
+                <Link href="/architecture/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Architecture</Link>
+                <Link href="/demo/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Live Demo</Link>
+                <Link href="/terraform/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Terraform</Link>
+                <Link href="/screenshots/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Screenshots</Link>
               </div>
             </div>
           )}
@@ -80,11 +80,11 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up stagger-3">
-              <Link href="/architecture" className="btn-primary inline-flex items-center justify-center group">
+              <Link href="/architecture/" className="btn-primary inline-flex items-center justify-center group">
                 View Architecture
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link href="/demo" className="btn-secondary inline-flex items-center justify-center">
+              <Link href="/demo/" className="btn-secondary inline-flex items-center justify-center">
                 Try Live Demo
               </Link>
             </div>
@@ -287,10 +287,10 @@ export default function HomePage() {
                 Dive deep into the architecture, try the live CRUD demo, or explore the Terraform code.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Link href="/architecture" className="btn-primary">
+                <Link href="/architecture/" className="btn-primary">
                   Deep Dive Architecture
                 </Link>
-                <Link href="/demo" className="btn-secondary">
+                <Link href="/demo/" className="btn-secondary">
                   Try the API
                 </Link>
               </div>
