@@ -118,6 +118,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
+            git pull --rebase origin main
             git commit -m "docs: update live frontend URL [skip ci]"
             git push
           fi
