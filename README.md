@@ -1243,7 +1243,11 @@ _Run the "Update Outputs" workflow to populate this section with live infrastruc
 ## Live Deployment
 
 <!-- FRONTEND_DEPLOY_START -->
-_Deploy the frontend to see the live URL here._
+
+| 🌐 **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
+|-----------------|---------------|
+| 📅 Last Deploy | 2025-12-13 04:53:07 UTC |
+| 🔖 Commit | `4c648ad32a5f0b2376eccc5f73b3f91e348d1b22` |
 <!-- FRONTEND_DEPLOY_END -->
 
 ---
