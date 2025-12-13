@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Cloud, Server, Database, Globe, Activity, Code, ArrowRight, Sparkles, Shield, Zap, Menu, X } from 'lucide-react';
+import { Cloud, Server, Database, Globe, Activity, Code, ArrowRight, Sparkles, Shield, Zap, Menu, X, Lock, HardDrive, Network, BarChart3, Container, GitBranch, Atom, Box, Plug } from 'lucide-react';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -141,8 +141,8 @@ export default function HomePage() {
 
             {/* Private VPC Section */}
             <div className="relative border-2 border-dashed border-orange-300 rounded-2xl p-6 bg-gradient-to-br from-white/50 to-orange-50/30">
-              <div className="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold rounded-full">
-                🔒 Private VPC
+              <div className="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold rounded-full flex items-center gap-1">
+                <Lock className="h-3 w-3" /> Private VPC
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-4">
@@ -241,25 +241,25 @@ export default function HomePage() {
           
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
             {[
-              { name: 'Amazon S3', desc: 'Static hosting', emoji: '📦' },
-              { name: 'CloudFront', desc: 'CDN', emoji: '🌐' },
-              { name: 'API Gateway', desc: 'HTTP API', emoji: '🔌' },
-              { name: 'ECS Fargate', desc: 'Containers', emoji: '🐳' },
-              { name: 'DynamoDB', desc: 'NoSQL Database', emoji: '🗄️' },
-              { name: 'CloudWatch', desc: 'Monitoring', emoji: '📊' },
-              { name: 'ECR', desc: 'Container Registry', emoji: '📋' },
-              { name: 'VPC', desc: 'Networking', emoji: '🔒' },
-              { name: 'Terraform', desc: 'IaC', emoji: '🏗️' },
-              { name: 'GitHub Actions', desc: 'CI/CD', emoji: '⚡' },
-              { name: 'Next.js', desc: 'Frontend', emoji: '⚛️' },
-              { name: 'FastAPI', desc: 'Backend', emoji: '🐍' },
+              { name: 'Amazon S3', desc: 'Static hosting', icon: HardDrive, color: 'text-emerald-500' },
+              { name: 'CloudFront', desc: 'CDN', icon: Globe, color: 'text-orange-500' },
+              { name: 'API Gateway', desc: 'HTTP API', icon: Plug, color: 'text-purple-500' },
+              { name: 'ECS Fargate', desc: 'Containers', icon: Container, color: 'text-blue-500' },
+              { name: 'DynamoDB', desc: 'NoSQL Database', icon: Database, color: 'text-amber-500' },
+              { name: 'CloudWatch', desc: 'Monitoring', icon: BarChart3, color: 'text-rose-500' },
+              { name: 'ECR', desc: 'Container Registry', icon: Box, color: 'text-indigo-500' },
+              { name: 'VPC', desc: 'Networking', icon: Network, color: 'text-cyan-500' },
+              { name: 'Terraform', desc: 'IaC', icon: Code, color: 'text-violet-500' },
+              { name: 'GitHub Actions', desc: 'CI/CD', icon: GitBranch, color: 'text-gray-700' },
+              { name: 'Next.js', desc: 'Frontend', icon: Atom, color: 'text-sky-500' },
+              { name: 'FastAPI', desc: 'Backend', icon: Zap, color: 'text-teal-500' },
             ].map((tech, idx) => (
               <div 
                 key={idx} 
                 className="glass rounded-xl p-4 text-center card-hover group"
                 style={{ animationDelay: `${idx * 0.05}s` }}
               >
-                <div className="text-2xl mb-2 group-hover:scale-125 transition-transform">{tech.emoji}</div>
+                <tech.icon className={`h-7 w-7 mx-auto mb-2 ${tech.color} group-hover:scale-125 transition-transform`} />
                 <div className="font-bold text-gray-800">{tech.name}</div>
                 <div className="text-sm text-gray-500">{tech.desc}</div>
               </div>

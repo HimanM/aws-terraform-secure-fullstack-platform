@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Cloud, Plus, Trash2, Edit2, RefreshCw, X, Check, Loader2, Sparkles, Menu, Zap, Terminal } from 'lucide-react';
+import { Cloud, Plus, Trash2, Edit2, RefreshCw, X, Check, Loader2, Sparkles, Menu, Zap, Terminal, AlertTriangle } from 'lucide-react';
 
 interface Item {
   id: string;
@@ -201,7 +201,7 @@ export default function DemoPage() {
         {error && (
           <div className="glass border-l-4 border-red-500 text-red-700 px-4 py-3 rounded-xl mb-6 animate-slide-up flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-red-500">⚠️</span>
+              <AlertTriangle className="h-5 w-5 text-red-500" />
               <span><strong>Error:</strong> {error}</span>
             </div>
             <button onClick={() => setError(null)} className="hover:bg-red-100 rounded-lg p-1 transition-colors">

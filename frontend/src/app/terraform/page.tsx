@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Cloud, Copy, Check, Menu, X, Sparkles, Terminal, Folder, FileCode, AlertTriangle } from 'lucide-react';
+import { Cloud, Copy, Check, Menu, X, Sparkles, Terminal, Folder, FileCode, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 const CodeBlock = ({ title, language, code }: { title: string; language: string; code: string }) => {
   const [copied, setCopied] = useState(false);
@@ -293,7 +293,7 @@ python seed_db.py`
                 <ul className="text-gray-600 text-sm space-y-2">
                   {module.items.map((item, i) => (
                     <li key={i} className="flex items-start">
-                      <span className={`text-${module.color}-500 mr-2`}>✓</span>
+                      <CheckCircle2 className={`h-4 w-4 text-${module.color}-500 mr-2 flex-shrink-0 mt-0.5`} />
                       <span>{item}</span>
                     </li>
                   ))}
