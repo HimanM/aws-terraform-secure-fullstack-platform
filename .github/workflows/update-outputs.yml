@@ -1,0 +1,138 @@
+# =============================================================================
+# GitHub Actions Workflow - Update README with Terraform Outputs
+# =============================================================================
+# Fetches Terraform outputs and updates README.md with live infrastructure values
+
+name: Update Outputs
+
+on:
+  workflow_dispatch:  # Manual trigger
+  workflow_run:
+    workflows: ["Terraform"]
+    types:
+      - completed
+
+env:
+  AWS_REGION: us-west-2
+  TF_VERSION: 1.6.0
+  WORKING_DIRECTORY: terraform/environments/dev
+
+permissions:
+  id-token: write   # Required for OIDC
+  contents: write   # Required to commit changes
+
+jobs:
+  update-readme:
+    name: Update README with Outputs
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Get Terraform Outputs
+        id: outputs
+        run: |
+          # Get outputs as JSON
+          OUTPUTS=$(terraform output -json)
+          
+          # Extract values (handle potential missing outputs gracefully)
+          API_URL=$(echo $OUTPUTS | jq -r '.api_gateway_url.value // "Not deployed"')
+          CLOUDFRONT_URL=$(echo $OUTPUTS | jq -r '.cloudfront_url.value // "Not deployed"')
+          CLOUDFRONT_ID=$(echo $OUTPUTS | jq -r '.cloudfront_distribution_id.value // "Not deployed"')
+          S3_BUCKET=$(echo $OUTPUTS | jq -r '.frontend_bucket_name.value // "Not deployed"')
+          ECR_URL=$(echo $OUTPUTS | jq -r '.ecr_repository_url.value // "Not deployed"')
+          ECS_CLUSTER=$(echo $OUTPUTS | jq -r '.ecs_cluster_name.value // "Not deployed"')
+          DYNAMODB_TABLE=$(echo $OUTPUTS | jq -r '.dynamodb_table_name.value // "Not deployed"')
+          GITHUB_ROLE=$(echo $OUTPUTS | jq -r '.github_actions_role_arn.value // "Not deployed"')
+          DASHBOARD_URL=$(echo $OUTPUTS | jq -r '.cloudwatch_dashboard_url.value // "Not deployed"')
+          
+          # Create markdown table
+          cat << EOF > /tmp/outputs.md
+          
+          | Resource | Value |
+          |----------|-------|
+          | 🌐 **CloudFront URL** | $CLOUDFRONT_URL |
+          | 🔌 **API Gateway URL** | $API_URL |
+          | 📦 **S3 Bucket** | $S3_BUCKET |
+          | 🐳 **ECR Repository** | $ECR_URL |
+          | 🖥️ **ECS Cluster** | $ECS_CLUSTER |
+          | 🗄️ **DynamoDB Table** | $DYNAMODB_TABLE |
+          | 📊 **CloudWatch Dashboard** | [View Dashboard]($DASHBOARD_URL) |
+          | 🔐 **GitHub Actions Role** | \`$GITHUB_ROLE\` |
+          
+          _Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')_
+          EOF
+          
+          echo "Generated outputs table"
+          cat /tmp/outputs.md
+
+      - name: Update README
+        working-directory: ${{ github.workspace }}
+        run: |
+          # Read the outputs content
+          OUTPUTS_CONTENT=$(cat /tmp/outputs.md)
+          
+          # Use awk to replace content between markers
+          awk -v outputs="$OUTPUTS_CONTENT" '
+            /<!-- TERRAFORM_OUTPUTS_START -->/ {
+              print
+              print outputs
+              skip = 1
+              next
+            }
+            /<!-- TERRAFORM_OUTPUTS_END -->/ {
+              skip = 0
+            }
+            !skip
+          ' README.md > README.tmp && mv README.tmp README.md
+          
+          echo "README.md updated with Terraform outputs"
+
+      - name: Check for changes
+        id: changes
+        working-directory: ${{ github.workspace }}
+        run: |
+          if git diff --quiet README.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.changes.outputs.changed == 'true'
+        working-directory: ${{ github.workspace }}
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          git commit -m "docs: update infrastructure outputs [skip ci]"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## 📤 Terraform Outputs Updated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat /tmp/outputs.md >> $GITHUB_STEP_SUMMARY

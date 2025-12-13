@@ -145,14 +145,58 @@ npm run build
 - Container Insights enabled
 - Access logs for API Gateway
 
-## 🔧 GitHub Actions Secrets Required
+## 🔧 GitHub Actions Secrets Configuration
 
-| Secret | Description |
-|--------|-------------|
-| `AWS_ROLE_ARN` | ARN of the GitHub Actions IAM role |
-| `API_GATEWAY_URL` | API Gateway endpoint URL |
-| `S3_BUCKET_NAME` | Frontend S3 bucket name |
-| `CLOUDFRONT_DISTRIBUTION_ID` | CloudFront distribution ID |
+To enable CI/CD pipelines, configure these secrets in your GitHub repository:
+
+**Settings → Secrets and variables → Actions → New repository secret**
+
+| Secret | Description | How to Get |
+|--------|-------------|------------|
+| `AWS_ROLE_ARN` | ARN of the GitHub Actions IAM role for OIDC | `terraform output github_actions_role_arn` |
+| `API_GATEWAY_URL` | API Gateway endpoint URL (with https://) | `terraform output api_gateway_endpoint` |
+| `S3_BUCKET_NAME` | Frontend S3 bucket name | `terraform output frontend_bucket_name` |
+| `CLOUDFRONT_DISTRIBUTION_ID` | CloudFront distribution ID | `terraform output cloudfront_distribution_id` |
+
+### Getting Secret Values
+
+After running `terraform apply`, get all values at once:
+
+```bash
+cd terraform/environments/dev
+terraform output
+```
+
+### Example Values
+
+```
+AWS_ROLE_ARN                = arn:aws:iam::123456789012:role/devops-project-9-github-actions
+API_GATEWAY_URL             = https://abc123xyz.execute-api.us-west-2.amazonaws.com
+S3_BUCKET_NAME              = devops-project-9-frontend-abc123
+CLOUDFRONT_DISTRIBUTION_ID  = E1ABC2DEF3GHIJ
+```
+
+### Workflow Triggers
+
+| Workflow | Trigger | Path Filter |
+|----------|---------|-------------|
+| **Terraform** | Push to `main`, PR | `terraform/**` |
+| **Backend** | Push to `main` | `backend/**` |
+| **Frontend** | Push to `main` | `frontend/**` |
+
+All workflows can also be triggered manually via `workflow_dispatch`.
+
+## 📤 Infrastructure Outputs
+
+<!-- TERRAFORM_OUTPUTS_START -->
+_Run the "Update Outputs" workflow to populate this section with live infrastructure values._
+<!-- TERRAFORM_OUTPUTS_END -->
+
+## 🌐 Live Deployment
+
+<!-- FRONTEND_DEPLOY_START -->
+_Deploy the frontend to see the live URL here._
+<!-- FRONTEND_DEPLOY_END -->
 
 ## 💰 Cost Considerations
 

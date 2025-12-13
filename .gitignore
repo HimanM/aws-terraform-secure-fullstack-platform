@@ -63,3 +63,7 @@ Thumbs.db
 dist/
 build/
 *.zip
+
+
+# Other
+tfoutputs.txt

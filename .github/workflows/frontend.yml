@@ -20,7 +20,7 @@ env:
 
 permissions:
   id-token: write   # Required for OIDC
-  contents: read
+  contents: write   # Required to commit README changes
 
 jobs:
   build-and-deploy:
@@ -75,9 +75,60 @@ jobs:
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
 
+      - name: Get CloudFront Domain
+        id: cloudfront
+        run: |
+          DOMAIN=$(aws cloudfront get-distribution --id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --query 'Distribution.DomainName' --output text)
+          echo "domain=$DOMAIN" >> $GITHUB_OUTPUT
+          echo "url=https://$DOMAIN" >> $GITHUB_OUTPUT
+
+      - name: Update README with Live URL
+        run: |
+          FRONTEND_URL="${{ steps.cloudfront.outputs.url }}"
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          # Create the new content
+          cat << EOF > /tmp/deploy_status.md
+          
+          | 🌐 **Live Site** | $FRONTEND_URL |
+          |-----------------|---------------|
+          | 📅 Last Deploy | $TIMESTAMP |
+          | 🔖 Commit | \`${{ github.sha }}\` |
+          EOF
+          
+          # Update README between markers
+          awk -v content="$(cat /tmp/deploy_status.md)" '
+            /<!-- FRONTEND_DEPLOY_START -->/ {
+              print
+              print content
+              skip = 1
+              next
+            }
+            /<!-- FRONTEND_DEPLOY_END -->/ {
+              skip = 0
+            }
+            !skip
+          ' README.md > README.tmp && mv README.tmp README.md
+
+      - name: Commit README changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: update live frontend URL [skip ci]"
+            git push
+          fi
+
       - name: Summary
         run: |
-          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- **S3 Bucket**: ${{ secrets.S3_BUCKET_NAME }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **CloudFront**: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Resource | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🌐 **Live URL** | ${{ steps.cloudfront.outputs.url }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📦 **S3 Bucket** | ${{ secrets.S3_BUCKET_NAME }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ☁️ **CloudFront** | ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔖 **Commit** | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
