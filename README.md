@@ -1235,7 +1235,19 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 ## Infrastructure Outputs
 
 <!-- TERRAFORM_OUTPUTS_START -->
-_Run the "Update Outputs" workflow to populate this section with live infrastructure values._
+
+| Resource | Value |
+|----------|-------|
+| 🌐 **CloudFront URL** | https://d3sb7cb2qzqglh.cloudfront.net |
+| 🔌 **API Gateway URL** | https://sqo1ewnme4.execute-api.us-west-2.amazonaws.com |
+| 📦 **S3 Bucket** | devops-project-9-frontend-603630702351 |
+| 🐳 **ECR Repository** | 603630702351.dkr.ecr.us-west-2.amazonaws.com/devops-project-9-backend |
+| 🖥️ **ECS Cluster** | devops-project-9-cluster |
+| 🗄️ **DynamoDB Table** | devops-project-9-items |
+| 📊 **CloudWatch Dashboard** | [View Dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=devops-project-9-dashboard) |
+| 🔐 **GitHub Actions Role** | `arn:aws:iam::603630702351:role/devops-project-9-github-actions-role` |
+
+_Last updated: 2025-12-13 05:20:04 UTC_
 <!-- TERRAFORM_OUTPUTS_END -->
 
 ---
