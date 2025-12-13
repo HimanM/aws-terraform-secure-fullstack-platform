@@ -196,7 +196,8 @@ resource "aws_iam_policy" "github_actions" {
           "ecr:DescribeRepositories",
           "ecr:ListImages",
           "ecr:GetRepositoryPolicy",
-          "ecr:GetLifecyclePolicy"
+          "ecr:GetLifecyclePolicy",
+          "ecr:ListTagsForResource"
         ]
         Resource = var.ecr_repository_arn
       },
@@ -258,7 +259,10 @@ resource "aws_iam_policy" "github_actions" {
           "s3:GetBucketPublicAccessBlock",
           "s3:GetBucketOwnershipControls",
           "s3:GetLifecycleConfiguration",
-          "s3:GetReplicationConfiguration"
+          "s3:GetReplicationConfiguration",
+          "s3:GetAccelerateConfiguration",
+          "s3:GetBucketRequestPayment",
+          "s3:GetBucketObjectLockConfiguration"
         ]
         Resource = [
           var.frontend_bucket_arn,
@@ -319,8 +323,10 @@ resource "aws_iam_policy" "github_actions" {
         Effect = "Allow"
         Action = [
           "ec2:DescribeVpcs",
+          "ec2:DescribeVpcAttribute",
           "ec2:DescribeSubnets",
           "ec2:DescribeSecurityGroups",
+          "ec2:DescribeSecurityGroupRules",
           "ec2:DescribeRouteTables",
           "ec2:DescribeInternetGateways",
           "ec2:DescribeNatGateways",
@@ -328,7 +334,8 @@ resource "aws_iam_policy" "github_actions" {
           "ec2:DescribeNetworkInterfaces",
           "ec2:DescribeAvailabilityZones",
           "ec2:DescribeAddresses",
-          "ec2:DescribeTags"
+          "ec2:DescribeTags",
+          "ec2:DescribePrefixLists"
         ]
         Resource = "*"
       },
@@ -338,7 +345,8 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           "logs:DescribeLogGroups",
           "logs:DescribeLogStreams",
-          "logs:ListTagsLogGroup"
+          "logs:ListTagsLogGroup",
+          "logs:ListTagsForResource"
         ]
         Resource = "*"
       },
