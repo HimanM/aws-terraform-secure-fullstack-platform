@@ -38,10 +38,10 @@
 
 <!-- FRONTEND_DEPLOY_START -->
 
-| **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
+| 🌐 **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
 |-----------------|---------------|
-| Last Deploy | 2025-12-13 05:48:32 UTC |
-| Commit | `30fbded53e3724d7fbb60c531ff0e7a350cee856` |
+| 📅 Last Deploy | 2025-12-13 06:20:43 UTC |
+| 🔖 Commit | `6043e9fafdfca6dbc333a977e9948440adc99078` |
 <!-- FRONTEND_DEPLOY_END -->
 
 ---
