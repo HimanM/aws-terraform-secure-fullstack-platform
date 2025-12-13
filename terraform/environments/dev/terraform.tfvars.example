@@ -24,7 +24,7 @@ create_alarms      = true
 
 # GitHub OIDC - Update with your repository
 create_github_oidc = true
-github_repo        = "USERNAME/devops-project-9"  # Replace with your repo
+github_repo        = "USERNAME/devops-project-9"  # Replace with your repo  Case-sensitive!
 
 # CORS - Update with your CloudFront domain after first deployment
 cors_allow_origins = ["*"]
