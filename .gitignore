@@ -5,8 +5,9 @@
 # Terraform
 *.tfstate
 *.tfstate.*
-*.tfvars
+*.tfvars.local
 !*.tfvars.example
+!terraform.tfvars
 .terraform/
 .terraform.lock.hcl
 crash.log

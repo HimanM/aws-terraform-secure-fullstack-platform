@@ -278,7 +278,8 @@ resource "aws_iam_policy" "github_actions" {
           "cloudfront:GetDistribution",
           "cloudfront:ListDistributions",
           "cloudfront:GetOriginAccessControl",
-          "cloudfront:ListOriginAccessControls"
+          "cloudfront:ListOriginAccessControls",
+          "cloudfront:ListTagsForResource"
         ]
         Resource = "*"
       },
@@ -334,6 +335,7 @@ resource "aws_iam_policy" "github_actions" {
           "ec2:DescribeNetworkInterfaces",
           "ec2:DescribeAvailabilityZones",
           "ec2:DescribeAddresses",
+          "ec2:DescribeAddressesAttribute",
           "ec2:DescribeTags",
           "ec2:DescribePrefixLists"
         ]
@@ -366,7 +368,10 @@ resource "aws_iam_policy" "github_actions" {
         Action = [
           "apigateway:GET"
         ]
-        Resource = "arn:aws:apigateway:${data.aws_region.current.name}::/apis/*"
+        Resource = [
+          "arn:aws:apigateway:${data.aws_region.current.name}::/apis/*",
+          "arn:aws:apigateway:${data.aws_region.current.name}::/vpclinks/*"
+        ]
       },
       # ELB permissions for internal ALB
       {
@@ -378,7 +383,9 @@ resource "aws_iam_policy" "github_actions" {
           "elasticloadbalancing:DescribeTags",
           "elasticloadbalancing:DescribeTargetHealth",
           "elasticloadbalancing:DescribeLoadBalancerAttributes",
-          "elasticloadbalancing:DescribeTargetGroupAttributes"
+          "elasticloadbalancing:DescribeTargetGroupAttributes",
+          "elasticloadbalancing:DescribeListenerAttributes",
+          "elasticloadbalancing:DescribeRules"
         ]
         Resource = "*"
       },
