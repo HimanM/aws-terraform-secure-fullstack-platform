@@ -35,11 +35,8 @@
 ---
 
 ## Demo Video
+https://github.com/user-attachments/assets/6c8875cb-0f93-401c-95d2-c0c7d894d9e8
 
-<video width="640" height="360" controls>
-  <source src="docs/demo_video.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
 
 ---
 
