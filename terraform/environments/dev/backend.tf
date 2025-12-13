@@ -6,10 +6,10 @@
 
 terraform {
   backend "s3" {
-    bucket         = "devops-project-9-terraform-state-ACCOUNT_ID"  # Replace ACCOUNT_ID
-    key            = "dev/terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
-    dynamodb_table = "devops-project-9-terraform-locks"
+    bucket       = "devops-project-9-terraform-state-603630702351"  # Replace ACCOUNT_ID
+    key          = "dev/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
   }
 }
