@@ -74,14 +74,14 @@ jobs:
           
           | Resource | Value |
           |----------|-------|
-          | 🌐 **CloudFront URL** | $CLOUDFRONT_URL |
-          | 🔌 **API Gateway URL** | $API_URL |
-          | 📦 **S3 Bucket** | $S3_BUCKET |
-          | 🐳 **ECR Repository** | $ECR_URL |
-          | 🖥️ **ECS Cluster** | $ECS_CLUSTER |
-          | 🗄️ **DynamoDB Table** | $DYNAMODB_TABLE |
-          | 📊 **CloudWatch Dashboard** | [View Dashboard]($DASHBOARD_URL) |
-          | 🔐 **GitHub Actions Role** | \`$GITHUB_ROLE\` |
+          | **CloudFront URL** | $CLOUDFRONT_URL |
+          | **API Gateway URL** | $API_URL |
+          | **S3 Bucket** | $S3_BUCKET |
+          | **ECR Repository** | $ECR_URL |
+          | **ECS Cluster** | $ECS_CLUSTER |
+          | **DynamoDB Table** | $DYNAMODB_TABLE |
+          | **CloudWatch Dashboard** | [View Dashboard]($DASHBOARD_URL) |
+          | **GitHub Actions Role** | \`$GITHUB_ROLE\` |
           
           _Last updated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')_
           EOF

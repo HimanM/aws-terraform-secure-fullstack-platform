@@ -2,6 +2,11 @@
 
 <div align="center">
 
+[![Frontend Deploy](https://github.com/HimanM/DevOps-Project-9/actions/workflows/frontend.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/frontend.yml)
+[![Backend Deploy](https://github.com/HimanM/DevOps-Project-9/actions/workflows/backend.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/backend.yml)
+[![Terraform](https://github.com/HimanM/DevOps-Project-9/actions/workflows/terraform.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/terraform.yml)
+[![Update Outputs](https://github.com/HimanM/DevOps-Project-9/actions/workflows/update-outputs.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/update-outputs.yml)
+
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
@@ -9,11 +14,45 @@
 ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 
+</div>
+
+---
+
+## Live Deployment
+
+<!-- FRONTEND_DEPLOY_START -->
+
+| **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
+|---------------|---------------------------------------|
+| Last Deploy | 2025-12-13 05:25:28 UTC |
+| Commit | `d349e76cf8479f25b3fb6bddcbfaf93e74368205` |
+<!-- FRONTEND_DEPLOY_END -->
+
+---
+
+## Infrastructure Outputs
+
+<!-- TERRAFORM_OUTPUTS_START -->
+
+| Resource | Value |
+|----------|-------|
+| **CloudFront URL** | https://d3sb7cb2qzqglh.cloudfront.net |
+| **API Gateway URL** | https://sqo1ewnme4.execute-api.us-west-2.amazonaws.com |
+| **S3 Bucket** | devops-project-9-frontend-603630702351 |
+| **ECR Repository** | 603630702351.dkr.ecr.us-west-2.amazonaws.com/devops-project-9-backend |
+| **ECS Cluster** | devops-project-9-cluster |
+| **DynamoDB Table** | devops-project-9-items |
+| **CloudWatch Dashboard** | [View Dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=devops-project-9-dashboard) |
+| **GitHub Actions Role** | `arn:aws:iam::603630702351:role/devops-project-9-github-actions-role` |
+
+_Last updated: 2025-12-13 05:20:04 UTC_
+<!-- TERRAFORM_OUTPUTS_END -->
+
+---
+
 **A production-ready AWS cloud architecture demonstrating modern DevOps practices with Infrastructure as Code, containerized microservices, and CI/CD automation.**
 
-[Architecture](#architecture-overview) • [Quick Start](#quick-start) • [Setup Guide](#step-by-step-setup-guide) • [Screenshots](#aws-console-screenshots) • [Tech Stack](#tech-stack)
-
-</div>
+[Architecture](#architecture-overview) | [Quick Start](#quick-start) | [Setup Guide](#step-by-step-setup-guide) | [Screenshots](#aws-console-screenshots) | [Tech Stack](#tech-stack)
 
 ---
 
@@ -1229,38 +1268,6 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 | **FastAPI** | [FastAPI Documentation](https://fastapi.tiangolo.com/) |
 | **Next.js** | [Next.js Documentation](https://nextjs.org/docs) |
 | **GitHub Actions** | [GitHub Actions Documentation](https://docs.github.com/en/actions) |
-
----
-
-## Infrastructure Outputs
-
-<!-- TERRAFORM_OUTPUTS_START -->
-
-| Resource | Value |
-|----------|-------|
-| 🌐 **CloudFront URL** | https://d3sb7cb2qzqglh.cloudfront.net |
-| 🔌 **API Gateway URL** | https://sqo1ewnme4.execute-api.us-west-2.amazonaws.com |
-| 📦 **S3 Bucket** | devops-project-9-frontend-603630702351 |
-| 🐳 **ECR Repository** | 603630702351.dkr.ecr.us-west-2.amazonaws.com/devops-project-9-backend |
-| 🖥️ **ECS Cluster** | devops-project-9-cluster |
-| 🗄️ **DynamoDB Table** | devops-project-9-items |
-| 📊 **CloudWatch Dashboard** | [View Dashboard](https://us-west-2.console.aws.amazon.com/cloudwatch/home?region=us-west-2#dashboards:name=devops-project-9-dashboard) |
-| 🔐 **GitHub Actions Role** | `arn:aws:iam::603630702351:role/devops-project-9-github-actions-role` |
-
-_Last updated: 2025-12-13 05:20:04 UTC_
-<!-- TERRAFORM_OUTPUTS_END -->
-
----
-
-## Live Deployment
-
-<!-- FRONTEND_DEPLOY_START -->
-
-| 🌐 **Live Site** | https://d3sb7cb2qzqglh.cloudfront.net |
-|-----------------|---------------|
-| 📅 Last Deploy | 2025-12-13 05:25:28 UTC |
-| 🔖 Commit | `d349e76cf8479f25b3fb6bddcbfaf93e74368205` |
-<!-- FRONTEND_DEPLOY_END -->
 
 ---
 

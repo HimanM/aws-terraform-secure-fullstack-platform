@@ -171,7 +171,7 @@ export default function ScreenshotsPage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
               <div className="relative">
-                <Image src="/favicon.png" alt="Logo" width={32} height={32} className="animate-float" />
+                <Image src="/favicon.png" alt="Logo" width={32} height={32} />
                 <Sparkles className="h-3 w-3 text-amber-400 absolute -top-1 -right-1" />
               </div>
               <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-amber-600">
