@@ -24,7 +24,7 @@ create_alarms      = true
 
 # GitHub OIDC - Update with your repository
 create_github_oidc = true
-github_repo        = "HimanM/DevOps-Project-9"  # Case-sensitive!
+github_repo        = "HimanM/aws-terraform-secure-fullstack-platform"  # Case-sensitive!
 
 # CORS - Update with your CloudFront domain after first deployment
 cors_allow_origins = ["*"]

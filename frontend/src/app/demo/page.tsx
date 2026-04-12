@@ -399,7 +399,7 @@ export default function DemoPage() {
             </div>
             <div className="flex flex-col items-center md:items-end gap-2">
               <a 
-                href="https://github.com/HimanM/DevOps-Project-9" 
+                href="https://github.com/HimanM/aws-terraform-secure-fullstack-platform" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-gray-600 hover:text-orange-500 transition-colors"

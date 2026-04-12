@@ -2,10 +2,10 @@
 
 <div align="center">
 
-[![Frontend Deploy](https://github.com/HimanM/DevOps-Project-9/actions/workflows/frontend.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/frontend.yml)
-[![Backend Deploy](https://github.com/HimanM/DevOps-Project-9/actions/workflows/backend.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/backend.yml)
-[![Terraform](https://github.com/HimanM/DevOps-Project-9/actions/workflows/terraform.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/terraform.yml)
-[![Update Outputs](https://github.com/HimanM/DevOps-Project-9/actions/workflows/update-outputs.yml/badge.svg)](https://github.com/HimanM/DevOps-Project-9/actions/workflows/update-outputs.yml)
+[![Frontend Deploy](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/frontend.yml/badge.svg)](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/frontend.yml)
+[![Backend Deploy](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/backend.yml/badge.svg)](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/backend.yml)
+[![Terraform](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/terraform.yml/badge.svg)](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/terraform.yml)
+[![Update Outputs](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/update-outputs.yml/badge.svg)](https://github.com/HimanM/aws-terraform-secure-fullstack-platform/actions/workflows/update-outputs.yml)
 
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
@@ -240,8 +240,8 @@ For experienced users who want to deploy quickly:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/HimanM/DevOps-Project-9.git
-cd DevOps-Project-9
+git clone https://github.com/HimanM/aws-terraform-secure-fullstack-platform.git
+cd aws-terraform-secure-fullstack-platform
 
 # 2. Bootstrap state backend
 cd terraform/bootstrap
